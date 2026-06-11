@@ -3,6 +3,7 @@ import "./App.css";
 import { getRecipes } from "./api/recipes";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
+import AuthPanel from "./components/AuthPanel";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -24,6 +25,7 @@ function App() {
         <h1>Find Your Next Meal</h1>
         <p>Browse our collection Recipes</p>
       </header>
+      <AuthPanel />
       {selectedRecipeId ? (
         <RecipeDetails
           selectedRecipeId={selectedRecipeId}
