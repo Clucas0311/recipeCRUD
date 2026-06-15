@@ -1,6 +1,6 @@
 import RecipeCard from "./RecipeCard";
 
-function RecipeList({ recipes, setSelectedRecipeId }) {
+function RecipeList({ recipes, setSelectedRecipeId, setRecipes }) {
   return (
     <section className="recipe-grid">
       {recipes.map((recipe) => {
@@ -9,6 +9,7 @@ function RecipeList({ recipes, setSelectedRecipeId }) {
             key={recipe.id}
             recipe={recipe}
             setSelectedRecipeId={setSelectedRecipeId}
+            setRecipes={setRecipes}
           />
         );
       })}

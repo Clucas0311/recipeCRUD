@@ -1,13 +1,32 @@
-function RecipeCard({ recipe, setSelectedRecipeId }) {
+import { deleteRecipe } from "../api/recipes";
+function RecipeCard({ recipe, setSelectedRecipeId, setRecipes }) {
+  async function handleRecipeDelete() {
+    await deleteRecipe(recipe.id);
+
+    setRecipes((prevRecipes) => {
+      return prevRecipes.filter((item) => {
+        // loop through and return a new array of all the recipes that do
+        // do not equal to the recipe that we deleted
+        return item.id !== recipe.id;
+      });
+    });
+  }
+
   return (
     <article className="recipe-card">
       <img src={recipe.imageUrl} alt={recipe.name} />
       <div className="recipe-card-content">
         <h2>{recipe.name}</h2>
         <p>{recipe.description}</p>
-        <button onClick={() => setSelectedRecipeId(recipe.id)}>
-          See Details
-        </button>
+
+        <div className="recipe-card-actions">
+          <button onClick={() => setSelectedRecipeId(recipe.id)}>
+            See Details
+          </button>
+          <button onClick={handleRecipeDelete} className="danger-button">
+            Delete
+          </button>
+        </div>
       </div>
     </article>
   );
