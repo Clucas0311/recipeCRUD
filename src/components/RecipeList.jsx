@@ -1,16 +1,11 @@
 import RecipeCard from "./RecipeCard";
 
-function RecipeList({ recipes, setSelectedRecipeId, setRecipes }) {
+function RecipeList({ recipes, setRecipes }) {
   return (
     <section className="recipe-grid">
       {recipes.map((recipe) => {
         return (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            setSelectedRecipeId={setSelectedRecipeId}
-            setRecipes={setRecipes}
-          />
+          <RecipeCard key={recipe.id} recipe={recipe} setRecipes={setRecipes} />
         );
       })}
     </section>

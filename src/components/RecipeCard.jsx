@@ -1,5 +1,6 @@
 import { deleteRecipe } from "../api/recipes";
-function RecipeCard({ recipe, setSelectedRecipeId, setRecipes }) {
+import { Link } from "react-router";
+function RecipeCard({ recipe, setRecipes }) {
   async function handleRecipeDelete() {
     await deleteRecipe(recipe.id);
 
@@ -20,9 +21,7 @@ function RecipeCard({ recipe, setSelectedRecipeId, setRecipes }) {
         <p>{recipe.description}</p>
 
         <div className="recipe-card-actions">
-          <button onClick={() => setSelectedRecipeId(recipe.id)}>
-            See Details
-          </button>
+          <Link to={`/recipes/${recipe.id}`}>See Details</Link>
           <button onClick={handleRecipeDelete} className="danger-button">
             Delete
           </button>

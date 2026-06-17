@@ -1,28 +1,41 @@
 import { useState, useEffect } from "react";
 import { getSingleRecipe } from "../api/recipes";
 import { updateRecipe } from "../api/recipes";
+import { useParams, useNavigate } from "react-router";
 
-function RecipeDetails({ selectedRecipeId, setSelectedRecipeId, setRecipes }) {
+function RecipeDetails({ setRecipes, recipes }) {
   const [recipe, setRecipe] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
 
+  const navigate = useNavigate();
+
+  const { recipeId } = useParams();
+
+  const foundRecipeId = recipes.find((recipe) => recipe.id === recipeId);
+
   useEffect(() => {
     async function loadSingleRecipe() {
-      const recipeData = await getSingleRecipe(selectedRecipeId);
-      setRecipe(recipeData);
+      if (foundRecipeId) {
+        const recipeData = await getSingleRecipe(foundRecipeId.id);
+        setRecipe(recipeData);
+      } else {
+        navigate("*");
+      }
     }
     loadSingleRecipe();
-  }, [selectedRecipeId]);
+  }, [recipeId]);
 
   //   if (!recipe) {
   //     return <p>Loading Recipe......</p>;
   //   }
 
+  console.log("recipe is working", recipe);
+
   const handleBack = () => {
-    setSelectedRecipeId(null);
+    navigate("/recipes");
   };
 
   function handleStartEditing() {
@@ -40,11 +53,11 @@ function RecipeDetails({ selectedRecipeId, setSelectedRecipeId, setRecipes }) {
       imageUrl: imageUrl,
       description: description,
     };
-    const editedRecipe = await updateRecipe(selectedRecipeId, newlyEditedObj);
+    const editedRecipe = await updateRecipe(recipeId, newlyEditedObj);
     setRecipes((prevState) => {
       console.log("HERE IN STATE", prevState);
       return prevState.map((item) => {
-        if (item.id === selectedRecipeId) {
+        if (item.id === recipeId) {
           return { ...item, ...editedRecipe };
         }
         return item;

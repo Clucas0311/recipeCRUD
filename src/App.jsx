@@ -5,6 +5,11 @@ import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
 // import AuthPanel from "./components/AuthPanel";
 import RecipeForm from "./components/RecipeForm";
+import HomePage from "./components/HomePage";
+import Layout from "./components/Layout";
+import NotFoundPage from "./components/NotFoundPage";
+
+import { Route, Routes } from "react-router";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -20,31 +25,43 @@ function App() {
 
   console.log("selectedId", selectedRecipeId);
   return (
-    <main className="app">
-      <header className="page-header">
-        <p className="eyebrow">Recipe Explorer</p>
-        <h1>Find Your Next Meal</h1>
-        <p>Browse our collection Recipes</p>
-      </header>
+    <>
       {/* <AuthPanel /> */}
       {/* <RecipeForm setRecipes={setRecipes} /> */}
-      <section className="recipe-layout">
-        {selectedRecipeId ? (
-          <RecipeDetails
-            selectedRecipeId={selectedRecipeId}
-            setSelectedRecipeId={setSelectedRecipeId}
-            setRecipes={setRecipes}
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/recipes"
+            element={<RecipeList recipes={recipes} setRecipes={setRecipes} />}
           />
-        ) : (
-          <RecipeList
-            recipes={recipes}
-            setSelectedRecipeId={setSelectedRecipeId}
-            setRecipes={setRecipes}
+
+          <Route
+            path="/recipes/:recipeId"
+            element={<RecipeDetails recipes={recipes} />}
           />
-        )}
-      </section>
-    </main>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
 export default App;
+
+//  <section className="recipe-layout">
+//    {selectedRecipeId ? (
+//      <RecipeDetails
+//        selectedRecipeId={selectedRecipeId}
+//        setSelectedRecipeId={setSelectedRecipeId}
+//        setRecipes={setRecipes}
+//      />
+//    ) : (
+//      <RecipeList
+//        recipes={recipes}
+//        setSelectedRecipeId={setSelectedRecipeId}
+//        setRecipes={setRecipes}
+//      />
+//    )}
+//  </section>;
