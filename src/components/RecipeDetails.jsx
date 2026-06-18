@@ -14,7 +14,9 @@ function RecipeDetails({ setRecipes, recipes }) {
 
   const { recipeId } = useParams();
 
-  const foundRecipeId = recipes.find((recipe) => recipe.id === recipeId);
+  const foundRecipeId = recipes.find(
+    (recipe) => recipe.id === Number(recipeId),
+  );
 
   useEffect(() => {
     async function loadSingleRecipe() {

@@ -1,4 +1,9 @@
-export default function LoginForm() {
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
+
+export default function RegisterForm() {
+  const { register } = useAuth();
+  const navigate = useNavigate();
   async function loginAction(formData) {
     const username = formData.get("username");
     const password = formData.get("password");
@@ -8,7 +13,7 @@ export default function LoginForm() {
       password,
     };
 
-    console.log(credentials);
+    register(credentials);
   }
 
   return (

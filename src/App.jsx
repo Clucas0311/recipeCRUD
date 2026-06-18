@@ -3,7 +3,7 @@ import "./App.css";
 import { getRecipes } from "./api/recipes";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
-// import AuthPanel from "./components/AuthPanel";
+import AuthPanel from "./components/AuthPanel";
 import RecipeForm from "./components/RecipeForm";
 import HomePage from "./components/HomePage";
 import Layout from "./components/Layout";
@@ -41,6 +41,7 @@ function App() {
             path="/recipes/:recipeId"
             element={<RecipeDetails recipes={recipes} />}
           />
+          <Route path="/login" element={<AuthPanel />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

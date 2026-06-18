@@ -4,7 +4,7 @@ import { signup, authenticate } from "../api/auth";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(null);
   const [authMessage, setAuthMessage] = useState("");
   const [authError, setAuthError] = useState(null);
@@ -16,6 +16,7 @@ export function AuthProvider({ children }) {
 
       const newToken = await signup(credentials);
       setToken(newToken);
+      localStorage.setItem("token", newToken);
       setAuthMessage("Account created! Token saved!");
     } catch (error) {
       throw new error();
@@ -32,6 +33,7 @@ export function AuthProvider({ children }) {
   function logout() {
     setToken(null);
     setUser(null);
+    localStorage.removeItem("token");
     setAuthMessage("You logged out.");
   }
 
